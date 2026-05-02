@@ -18,15 +18,19 @@ jobs:
       matrix:
         include:
           - name: minecraft
-            image: ghcr.io/tb516/aoc-aeronautics-minecraft
+            image: aoc-aeronautics-minecraft
             file: Containerfile
           - name: playit
-            image: ghcr.io/tb516/aoc-aeronautics-playit
+            image: aoc-aeronautics-playit
             file: Containerfile.playit
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set image namespace
+        id: image
+        run: echo "namespace=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
@@ -45,6 +49,8 @@ jobs:
           file: ${{ matrix.file }}
           platforms: linux/amd64
           push: true
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
           tags: |
-            ${{ matrix.image }}:latest
-            ${{ matrix.image }}:${{ github.sha }}
+            ${{ steps.image.outputs.namespace }}/${{ matrix.image }}:latest
+            ${{ steps.image.outputs.namespace }}/${{ matrix.image }}:${{ github.sha }}
