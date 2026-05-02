@@ -1,0 +1,20 @@
+[Unit]
+Description=All Of Create - Aeronautics Minecraft server
+Requires=aoc-aeronautics-pod.service
+After=aoc-aeronautics-pod.service
+
+[Container]
+ContainerName=aoc-minecraft
+Image=ghcr.io/tb516/aoc-aeronautics-minecraft:latest
+Pod=aoc-aeronautics.pod
+StartWithPod=true
+Environment=EULA=TRUE
+Environment=TZ=America/New_York
+Volume=%h/aoc-aeronautics/server:/data:Z
+Memory=12G
+NoNewPrivileges=true
+
+[Service]
+Restart=always
+TimeoutStartSec=1800
+ExecStartPre=/usr/bin/mkdir -p %h/aoc-aeronautics/server

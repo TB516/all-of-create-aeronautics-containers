@@ -1,0 +1,9 @@
+[Unit]
+Description=All Of Create - Aeronautics pod
+
+[Pod]
+PodName=aoc-aeronautics
+PublishPort=25565:25565
+
+[Install]
+WantedBy=default.target

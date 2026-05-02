@@ -1,0 +1,8 @@
+.git
+.github
+quadlet
+README.md
+playit.env
+*.log
+data
+aoc-aeronautics

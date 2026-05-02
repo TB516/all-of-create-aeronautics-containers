@@ -1,0 +1,16 @@
+[Unit]
+Description=playit tunnel for All Of Create - Aeronautics
+Requires=aoc-aeronautics-pod.service aoc-minecraft.service
+After=aoc-aeronautics-pod.service aoc-minecraft.service
+
+[Container]
+ContainerName=aoc-playit
+Image=ghcr.io/tb516/aoc-aeronautics-playit:latest
+Pod=aoc-aeronautics.pod
+StartWithPod=true
+EnvironmentFile=%h/aoc-aeronautics/secrets/playit.env
+NoNewPrivileges=true
+
+[Service]
+Restart=always
+TimeoutStartSec=900
