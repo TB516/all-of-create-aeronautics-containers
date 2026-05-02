@@ -8,10 +8,10 @@ The Quadlet units pull images from GHCR:
 
 ```text
 ghcr.io/tb516/aoc-aeronautics-minecraft:latest
-ghcr.io/tb516/aoc-aeronautics-playit:latest
+ghcr.io/playit-cloud/playit-agent:0.17
 ```
 
-The GitHub Actions workflow builds and publishes both images to GHCR on pushes to `main` and manual runs.
+The GitHub Actions workflow builds and publishes the Minecraft image to GHCR on pushes to `main` and manual runs. The playit sidecar uses the official playit agent image.
 
 ## Runtime Layout
 

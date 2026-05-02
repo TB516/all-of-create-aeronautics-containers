@@ -5,7 +5,7 @@ After=aoc-aeronautics-pod.service aoc-minecraft.service
 
 [Container]
 ContainerName=aoc-playit
-Image=ghcr.io/tb516/aoc-aeronautics-playit:latest
+Image=ghcr.io/playit-cloud/playit-agent:0.17
 Pod=aoc-aeronautics.pod
 StartWithPod=true
 EnvironmentFile=%h/aoc-aeronautics/secrets/playit.env
