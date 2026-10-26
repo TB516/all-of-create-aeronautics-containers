@@ -29,11 +29,8 @@ RUN set -eux; \
     rm /tmp/temurin-jre.tar.gz; \
     ln -sf "${JAVA_HOME}/bin/java" /usr/local/bin/java; \
     java -version; \
-    # Temurin has not shipped a cacerts update for the eMudhra intermediate compromise (2026-10-17) yet,
-    # so remove the emSign ECC Root CA - G3 root that cross-signs them, then fail the build if either
-    # affected root (emSign ECC Root CA - G3, Comodo AAA Certificate Services) is still trusted.
-    keytool -delete -cacerts -storepass changeit \
-      -alias "cn_emsign_ecc_root_ca__g3,o_emudhra_technologies_limited,ou_emsign_pki,c_in [jdk]" || true; \
+    # Temurin 21.0.13+9 drops the roots behind the compromised eMudhra intermediates (2026-10-17).
+    # Fail the build if the JRE still trusts either one (emSign ECC Root CA - G3, Comodo AAA Certificate Services).
     if keytool -list -cacerts -storepass changeit | grep -E \
       '86:A1:EC:BA:08:9C:4A:8D:3B:BE:27:34:C6:12:BA:34:1D:81:3E:04:3C:F9:E8:A8:62:CD:5C:57:A3:6B:BE:6B|D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4'; then \
       exit 1; \
